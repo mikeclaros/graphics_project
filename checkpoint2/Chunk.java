@@ -66,7 +66,10 @@ public class Chunk {
         VBOTextureHandle = glGenBuffers();
         vboColorHandle = glGenBuffers();
         
-        SimplexNoise noise = new SimplexNoise(128,0.475,(int)System.currentTimeMillis());
+        Random r = new Random((int)System.currentTimeMillis());
+        int power = 5 + r.nextInt(9-5);
+        System.out.println(power);
+        SimplexNoise noise = new SimplexNoise(/*(int)Math.pow((double)2,(double)power)*/128,0.250,(int)System.currentTimeMillis());
         
         FloatBuffer vertexPositionData =
                 BufferUtils.createFloatBuffer(CHUNK_SIZE * CHUNK_SIZE * CHUNK_SIZE * 6 * 12);
@@ -90,14 +93,16 @@ public class Chunk {
         float length = 0;
         
         
+        
+        
         for ( x = 0; /*(x < width) &&*/ (x < CHUNK_SIZE); x++) {
             for (z = 0; /*z < length &&*/ z < CHUNK_SIZE; z++) {
 
                 int i = (int)(startX/2 + x *((XEnd -startX/2)/xResolution));
                 int k = (int)(startZ/2 +  z *((ZEnd-startZ/2)/zResolution));
-                float height = (startY/2 + (float)(100*noise.getNoise((int)x,(int)z)/2.0f) * CUBE_LENGTH/2);
+                float height = (startY/2 + (float)(100*noise.getNoise((int)x,(int)z))/2f * CUBE_LENGTH/2);
                 height = height + 15.0f;
-                System.out.println(height);
+                //System.out.println(height);
                 for (y = 0;(y < height) && (y < CHUNK_SIZE); y++) {
                     VertexTextureData.put(createTexCube(
                         (float) 0, (float) 0, blocks[(int)(x)][(int)(y)][(int)(z)]));
