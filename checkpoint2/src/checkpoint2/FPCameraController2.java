@@ -169,12 +169,16 @@ public class FPCameraController2 {
             if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
                 moveDown(movementSpeed);
             }
+            if(Keyboard.isKeyDown(Keyboard.KEY_F5)){
+                chunk.rebuildMesh(0, 0, 0);
+            }
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             glLoadIdentity();
             lookThrough();
 
             chunk.render();
+            
 
             Display.update();
             Display.sync(60);
